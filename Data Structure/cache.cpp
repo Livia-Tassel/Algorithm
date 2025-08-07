@@ -145,7 +145,7 @@ void print_cache_state(cache &lru_cache)
     cout << "]" << endl;
 }
 
-int main()
+signed main()
 {
     cache lru_cache(3);
     cout << "created a cache with capacity 3." << endl;
