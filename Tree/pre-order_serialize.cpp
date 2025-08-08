@@ -87,7 +87,6 @@ node *deserialize(string s)
 
 signed main()
 {
-    // 1. 构建一个二叉树
     //       1
     //      / \
     //     2   3
