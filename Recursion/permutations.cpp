@@ -70,8 +70,8 @@ list<list<ll>> permulations(vector<ll> arr)
 
 signed main()
 {
-    vector<ll> arr(3);
-    arr[0] = 1, arr[1] = 2, arr[2] = 1;
+    vector<ll> arr(6);
+    arr[0] = 1, arr[1] = 2, arr[2] = 3, arr[3] = 4, arr[4] = 5, arr[5] = 6;
     list<list<ll>> ans = permulations(arr);
     for (const auto &list : ans)
     {
