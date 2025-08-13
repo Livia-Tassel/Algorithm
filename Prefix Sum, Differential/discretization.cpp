@@ -61,7 +61,7 @@ signed main()
     ll sizex = _sort(fx, n);
     ll sizey = _sort(fy, n);
 
-    // 2D Differential
+    // two-dimensional_differential
     ll diff_row = sizex + 2;
     ll diff_col = sizey + 2;
 
