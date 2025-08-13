@@ -22,7 +22,7 @@ ll sum_matrix(ll a, ll b, ll c, ll d)
 
 signed main()
 {
-    // 2D Prefix Sum
+    // two-dimensional_prefix_sum
     // sum[i][j] = sum(arr[0][0] to arr[i][j])
     ll arr[3][3] = {
         {3, 1, -2},

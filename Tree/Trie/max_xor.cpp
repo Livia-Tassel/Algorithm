@@ -3,6 +3,7 @@
 #include <string>
 #include <memory>
 #include <bit>
+#include <set>
 #define ll long long
 using namespace std;
 const ll MAXN = 100001;
@@ -78,6 +79,36 @@ ll max_xor(const vector<ll> &arr)
         ans = max(ans, num ^ f(num));
     }
     clear();
+    return ans;
+}
+
+ll max_xor_hash(const vector<ll> &arr)
+{
+    ll max = LLONG_MIN;
+    for (ll num : arr)
+    {
+        max = std::max(num, max);
+    }
+    ll ans = 0;
+    high = 63 - __builtin_clzll(max); // max != 0
+
+    set<ll> s;
+    for (ll i = high; i >= 0; i--)
+    {
+        ll better = ans | (1LL << i); // expect
+        s.clear();
+        for (ll num : arr)
+        {
+            num = (num >> i) << i;
+            s.insert(num);
+
+            if (s.count(better ^ num))
+            {
+                ans = better;
+                break;
+            }
+        }
+    }
     return ans;
 }
 
