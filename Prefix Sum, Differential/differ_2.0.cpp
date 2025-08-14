@@ -14,6 +14,7 @@ ll get_diff(ll i, ll j)
     return i < 0 || j < 0 ? 0 : diff[i][j];
 }
 
+// sum (a, b) to (d, c)
 ll sum_diff(ll a, ll b, ll c, ll d)
 {
     return a > c ? 0 : get_diff(c, d) - get_diff(a - 1, d) - get_diff(c, b - 1) + get_diff(a - 1, b - 1);
