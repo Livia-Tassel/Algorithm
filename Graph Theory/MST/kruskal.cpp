@@ -51,12 +51,13 @@ void kruskal()
     {
         cin >> adj[i][0] >> adj[i][1] >> adj[i][2];
     }
-    sort(adj.begin(), adj.end(), [](const vector<ll> &a, const vector<ll> &b)
+    sort(adj.begin(), adj.begin() + m, [](const vector<ll> &a, const vector<ll> &b)
          { return a[2] < b[2]; });
 
     ll ans = 0, cnt = 0;
-    for (vector<ll> &edge : adj)
+    for (ll i = 0; i < m; i++)
     {
+        vector<ll> &edge = adj[i];
         ll u = edge[0], v = edge[1], w = edge[2];
         if (un(u, v))
         {
