@@ -173,7 +173,7 @@ ll days(ll n)
 }
 
 // maximum line segment overlap problem
-ll minMeetingRooms(vector<vector<ll>> &mt)
+ll meeting(vector<vector<ll>> &mt)
 {
     if (mt.empty())
     {
@@ -206,4 +206,55 @@ ll minMeetingRooms(vector<vector<ll>> &mt)
 // courses, each with a duration and a deadline, you cannot take multiple courses at the same time, find the maximum number of courses you can take.
 ll schedule(vector<vector<ll>> &courses)
 {
+    sort(courses.begin(), courses.end(), [](const vector<ll> &a, const vector<ll> &b)
+         { return a[1] < b[1]; });
+    priority_queue<ll> pq;
+    ll time = 0;
+    for (vector<ll> &cour : courses)
+    {
+        if (time + cour[0] > cour[1])
+        {
+            // cost substitution, one course for one course.
+            if (!pq.empty() && pq.top() > cour[0])
+            {
+                time -= (pq.top() - cour[0]);
+                pq.pop();
+                pq.push(cour[0]);
+            }
+        }
+        else
+        {
+            time += cour[0];
+            pq.push(cour[0]);
+        }
+    }
+    return pq.size();
+}
+
+// give some sticks with different lengths, the cost to connect two sticks of lengths x and y equals x + y, find the minimum total cost to connect all sticks into a single stick.
+ll pop_top(priority_queue<ll, vector<ll>, greater<ll>> &pq)
+{
+    if (pq.empty())
+    {
+        return 0;
+    }
+    ll top_val = pq.top();
+    pq.pop();
+    return top_val;
+}
+ll hafuman(vector<ll> &sticks)
+{
+    priority_queue<ll, vector<ll>, greater<ll>> pq;
+    for (ll s : sticks)
+    {
+        pq.push(s);
+    }
+    ll sum = 0, cur = 0;
+    while (pq.size() > 1)
+    {
+        cur = pop_top(pq) + pop_top(pq);
+        sum += cur;
+        pq.push(cur);
+    }
+    return sum;
 }

@@ -12,8 +12,8 @@ vector<ll> Random_Array(ll n, ll v)
     vector<ll> arr(n);
     for (ll i = 0; i < n; ++i)
     {
-        // rand() generates an integer between 0 and RAND_MAX.
-        // use static_cast<double>(rand()) / RAND_MAX to get a double in [0.0, 1.0)
+        // rand() generates an integer between 0 and rand_max.
+        // use static_cast<double>(rand()) / rand_max to get a double in [0.0, 1.0)
         // static_cast<ll>(randomdouble * v) -> ll in [0, v) range, still uniformly distributed
         // static_cast<ll>(randomdouble * v) + 1 -> ll in [1, v] range, still uniformly distributed
         double randomdouble = static_cast<double>(rand()) / (RAND_MAX + 1.0);
@@ -90,11 +90,11 @@ signed main()
         // }
         // cout << endl;
 
-        vector<ll> arr_copy_1 = Copy_Array(arr);
-        vector<ll> arr_copy_2 = Copy_Array(arr);
-        Selection_Sort(arr_copy_1);
-        Insertion_Sort(arr_copy_2);
-        if (!Same_Array(arr_copy_1, arr_copy_2))
+        vector<ll> ass = Copy_Array(arr);
+        vector<ll> ais = Copy_Array(arr);
+        Selection_Sort(ass);
+        Insertion_Sort(ais);
+        if (!Same_Array(ass, ais))
         {
             cout << "Error!" << endl;
             cout << "Original Array: ";
@@ -107,14 +107,14 @@ signed main()
             cout << "Selection Sort Result: ";
             for (ll i = 0; i < n; ++i)
             {
-                cout << arr_copy_1[i] << " ";
+                cout << ass[i] << " ";
             }
             cout << endl;
 
             cout << "Insertion Sort Result: ";
             for (ll i = 0; i < n; ++i)
             {
-                cout << arr_copy_2[i] << " ";
+                cout << ais[i] << " ";
             }
             cout << endl;
         }
