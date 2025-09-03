@@ -23,7 +23,7 @@ struct node
     }
 };
 
-void solve_serialize(node *root, string &s)
+void sse(node *root, string &s)
 {
     if (root == nullptr)
     {
@@ -33,20 +33,20 @@ void solve_serialize(node *root, string &s)
     {
         ll val = root->data;
         s += (to_string(val) + ",");
-        solve_serialize(root->left, s);
-        solve_serialize(root->right, s);
+        sse(root->left, s);
+        sse(root->right, s);
     }
 }
 
 string serialize(node *root)
 {
     string s;
-    solve_serialize(root, s);
+    sse(root, s);
     return s;
 }
 
 ll cnt;
-node *solve_deserialize(vector<string> &vals)
+node *sde(vector<string> &vals)
 {
     if (cnt >= vals.size())
     {
@@ -61,8 +61,8 @@ node *solve_deserialize(vector<string> &vals)
     else
     {
         node *head = new node(stoll(cur));
-        head->left = solve_deserialize(vals);
-        head->right = solve_deserialize(vals);
+        head->left = sde(vals);
+        head->right = sde(vals);
         return head;
     }
 }
@@ -82,42 +82,5 @@ node *deserialize(string s)
     }
 
     cnt = 0;
-    return solve_deserialize(vals);
-}
-
-signed main()
-{
-    //       1
-    //      / \
-    //     2   3
-    //    / \   \
-    //   4   5   #
-    //  / \
-    // #   #
-    node *root = new node(1);
-    root->left = new node(2);
-    root->right = new node(3);
-    root->left->left = new node(4);
-    root->left->right = new node(5);
-
-    string serialized_tree = serialize(root);
-    cout << "serialized string: " << serialized_tree << endl;
-
-    node *new_root = deserialize(serialized_tree);
-
-    string reserialized_tree = serialize(new_root);
-    cout << "deserialized and reserialized string: " << reserialized_tree << endl;
-
-    if (serialized_tree == reserialized_tree)
-    {
-        cout << "\nserialization and deserialization successful!" << endl;
-    }
-    else
-    {
-        cout << "\nerror: The trees do not match." << endl;
-    }
-
-    delete root;
-    delete new_root;
-    return 0;
+    return sde(vals);
 }
