@@ -18,6 +18,7 @@ using vb = vector<bool>;
 const ll mod = 1e9 + 7;
 const ll maxn = 101;
 const ll bit = 63;
+const ll sml = 10e-7;
 // vl arr(maxn), basis(bit + 1, 0);
 // ll n, flag;
 // bool insert(ll x)
@@ -53,7 +54,7 @@ ll len, n, flag;
 vl arr(maxn), basis(maxn, 0);
 void gbuild()
 {
-    for (int i = 0; i < n; ++i)
+    for (ll i = 0; i < n; ++i)
     {
         basis[i + 1] = arr[i];
     }
@@ -86,7 +87,7 @@ void gbuild()
 ll kx(ll k)
 {
     vl cb;
-    for (int i = 1; i < len + 1; ++i)
+    for (ll i = 1; i < len + 1; ++i)
     {
         if (basis[i] > 0)
         {
@@ -112,79 +113,71 @@ ll kx(ll k)
 }
 
 // 2024 CCPC Online Contest
-void solve()
+ll n;
+vl a(maxn), b(maxn), p(bit, 0);
+void insert(ll x)
 {
-    ll n;
-    cin >> n;
-    vl a(n), b(n);
-    ll sum = 0, sm = 0;
-
-    // sm = f(a)
-    for (ll i = 0; i < n; i++)
-        cin >> a[i], sum ^= a[i], sm ^= a[i];
-    // sum = f(a) ^ f(b)
-    for (ll i = 0; i < n; i++)
-        cin >> b[i], sum ^= b[i];
-
-    vl c(bit + 5, 0);
-
-    auto insert = [&](ll x)
+    for (ll i = bit - 1; i > -1; i--)
     {
-        for (ll i = bit; i > -1; i--)
+        if ((x >> i) & 1)
         {
-            if (x >> i & 1)
+            if (!p[i])
             {
-                if (!c[i])
-                {
-                    c[i] = x;
-                    return;
-                }
-                else
-                    x ^= c[i];
-            }
-        }
-    };
-
-    for (ll i = 0; i < n; i++)
-    {
-        insert(a[i] ^ b[i]);
-    }
-
-    bool ok = false;
-    for (ll i = bit; i > -1; i--)
-    {
-        // no linear basis, continue
-        if (c[i])
-        {
-            // a[i] = b[i]
-            if (!((sum >> i) & 1))
-            {
-                // a[i] = 1
-                if ((sm >> i) & 1)
-                    sm ^= c[i];
-            }
-            else
-            {
-                // the first position a[i] != b[i]
-                ll ans = LLONG_MAX;
-                // 1.don't use c[i]; 2.use c[i]
-                for (auto v : {sm, sm ^ c[i]})
-                {
-                    for (ll j = i - 1; j > -1; j--)
-                    {
-                        v = min(v, v ^ c[j]);
-                    }
-                    ans = min(ans, max(v, sum ^ v));
-                }
-                cout << ans << '\n';
-                ok = true;
+                p[i] = x;
                 break;
             }
+            x ^= p[i];
         }
     }
-
-    if (!ok)
-    {
-        cout << max(sm, sm ^ sum) << '\n';
-    }
 }
+
+void solve()
+{
+    cin >> n;
+    ll sa = 0, sb = 0;
+    for (ll i = 1; i < n + 1; i++)
+    {
+        cin >> a[i];
+        sa ^= a[i];
+    }
+    for (ll i = 1; i < n + 1; i++)
+    {
+        cin >> b[i];
+        sb ^= b[i];
+        insert(a[i] ^ b[i]);
+    }
+    for (ll i = bit - 1; i > -1; i--)
+    {
+        ll xa = sa ^ p[i];
+        ll xb = sb ^ p[i];
+        if (max(xa, xb) < max(sa, sb))
+        {
+            sa = xa, sb = xb;
+        }
+    }
+    cout << max(sa, sb) << '\n';
+}
+
+// // vector linear basis
+// ll n, m;
+// vvl mat(maxn, vl(maxn));
+// bool insert(ll i)
+// {
+//     for (ll j = 1; j < m + 1; j++)
+//     {
+//         if (abs(mat[i][j]) >= sml)
+//         {
+//             if (basis[j] == 0)
+//             {
+//                 basis[j] = i;
+//                 return true;
+//             }
+//             double rate = mat[i][j] / mat[basis[j]][j];
+//             for (ll k = j; k < m + 1; k++)
+//             {
+//                 mat[i][k] -= rate * mat[basis[j]][k];
+//             }
+//         }
+//     }
+//     return false;
+// }
