@@ -12,6 +12,7 @@ vl pows(18);
 unordered_map<ll, ll> memo;
 
 // sum_digits from 1 to n
+// (logn)^2
 ll sd(ll n)
 {
     if (n < 0)
