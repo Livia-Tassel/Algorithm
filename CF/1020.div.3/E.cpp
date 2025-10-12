@@ -36,8 +36,11 @@ void solve()
             continue;
         }
 
+        // total number of digits greater than k and less than k in the permutation
         ll big = n - k, sml = k - 1;
+        // cumulative number of "bad points"
         ll nBig = 0, nSml = 0;
+        // remaining number of digits greater than k and less than k for exchange
         ll bigAv = n - k, smlAv = k - 1;
         ll lo = l, hi = r;
         while (lo <= hi)
@@ -54,7 +57,9 @@ void solve()
                     nSml++;
                 }
                 else
+                {
                     smlAv--;
+                }
                 sml--;
                 lo = mid + 1;
             }
@@ -65,7 +70,9 @@ void solve()
                     nBig++;
                 }
                 else
+                {
                     bigAv--;
+                }
                 big--;
                 hi = mid - 1;
             }
