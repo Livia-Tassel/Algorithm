@@ -7,10 +7,21 @@
 #include <set>
 #include <stack>
 #include <map>
+#include <random>
 using namespace std;
 #define ll long long
-// typedef __int128 ll;
+using vl = vector<ll>;
+using vvl = vector<vl>;
 
+#define vp(a)              \
+    cout << #a << " = ";   \
+    for (auto aa : a)      \
+        cout << aa << " "; \
+    cout << "\n";
+mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
+ll uld(ll a, ll b) { return uniform_int_distribution<ll>(a, b)(rng); }
+
+// typedef __int128 ll;
 bool is_prime(ll x)
 {
     if (x <= 1)
@@ -269,6 +280,17 @@ ll ehrlich(ll n)
         }
     }
     return cnt;
+
+    vvl pfac(n + 1);
+    for (ll i = 2; i <= n; i++)
+    {
+        if (!pfac[i].empty())
+            continue;
+
+        for (ll j = i; j <= n; j += i)
+            pfac[j].push_back(i);
+    }
+    // vp(pfac[12]);
 }
 
 // n
