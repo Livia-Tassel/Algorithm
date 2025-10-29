@@ -23,29 +23,11 @@ void solve()
         cin >> a[i];
     }
 
-    if (k % 2 == 1)
+    for (ll i = 0; i < n; i++)
     {
-        for (ll aa : a)
-        {
-            if (aa % 2 == 1)
-            {
-                cout << aa + k << " ";
-            }
-            else
-            {
-                cout << aa << " ";
-            }
-        }
-        cout << endl;
+        cout << (a[i] + (a[i] % (k + 1)) * k) << " ";
     }
-    else
-    {
-        for (ll aa : a)
-        {
-            cout << (k + 1) * aa << " ";
-        }
-        cout << endl;
-    }
+    cout << endl;
 }
 signed main()
 {
